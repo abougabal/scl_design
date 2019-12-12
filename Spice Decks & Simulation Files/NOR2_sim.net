@@ -1,0 +1,37 @@
+*** SPICE deck for cell NOR2_sim{sch} from library SCL-(4)
+*** Created on Sat Oct 26, 2019 12:29:52
+*** Last revised on Sat Oct 26, 2019 19:53:18
+*** Written on Sat Oct 26, 2019 19:53:21 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SCL-_4___NOR3_4 FROM CELL NOR3_4{sch}
+.SUBCKT SCL-_4___NOR3_4 A B C NOR3
+** GLOBAL gnd
+** GLOBAL vdd
+Mnmos@0 NOR3 A gnd gnd NMOS L=0.2U W=1.2U
+Mnmos@1 NOR3 B gnd gnd NMOS L=0.2U W=1.2U
+Mnmos@2 NOR3 C gnd gnd NMOS L=0.2U W=1.2U
+Mpmos@0 net@34 B net@33 vdd PMOS L=0.2U W=7.4U
+Mpmos@1 NOR3 C net@34 vdd PMOS L=0.2U W=7.4U
+Mpmos@2 net@33 A vdd vdd PMOS L=0.2U W=7.4U
+.ENDS SCL-_4___NOR3_4
+
+.global gnd vdd
+
+*** TOP LEVEL CELL: NOR2_sim{sch}
+XNOR3_4@0 A gnd gnd NOR3 SCL-_4___NOR3_4
+
+* Spice Code nodes in cell cell 'NOR2_sim{sch}'
+vdd vdd 0 DC 3.3,
+vin A 0 DC pulse 0 3.3 10n 0ps 0ps 10n,
+cload out 0 48fF,
+.tran 0 40n,
+.measure tpdr
++ TRIG v(A) VAL=1.65 FALL=1
++ TARG v(NOR3) VAL=1.65 RISE=1
+.measure tpdf
++ TRIG v(A) VAL=1.65 RISE=1
++ TARG v(NOR3) VAL=1.65 FALL=1
+.include /Users/Hatem/Desktop/Electric/scmos18.txt
+.END

@@ -1,0 +1,33 @@
+*** SPICE deck for cell tri_state_sim_8{lay} from library SCL-(4)
+*** Created on Wed Oct 23, 2019 19:44:15
+*** Last revised on Sat Oct 26, 2019 19:00:52
+*** Written on Sat Oct 26, 2019 19:00:55 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SCL-_4___tri_state_8 FROM CELL tri_state_8{lay}
+.SUBCKT SCL-_4___tri_state_8 en en_ gnd in out vdd
+Mnmos@9 net@219 in gnd gnd NMOS L=0.2U W=4.8U AS=5.44P AD=1.493P PS=18.6U PD=10.25U
+Mnmos@10 out en net@219 gnd NMOS L=0.2U W=4.8U AS=1.493P AD=3.173P PS=10.25U PD=11.7U
+Mpmos@6 net@501 in vdd vdd PMOS L=0.2U W=5.7U AS=7.075P AD=2.85P PS=25.1U PD=6.7U
+Mpmos@7 net@239 en_ net@503 vdd PMOS L=0.2U W=5.7U AS=2.708P AD=2.85P PS=6.65U PD=6.7U
+Mpmos@8 net@503 in net@501 vdd PMOS L=0.2U W=5.7U AS=2.85P AD=2.708P PS=6.7U PD=6.65U
+Mpmos@9 out en_ net@239 vdd PMOS L=0.2U W=5.7U AS=2.85P AD=3.173P PS=6.7U PD=11.7U
+.ENDS SCL-_4___tri_state_8
+
+*** TOP LEVEL CELL: tri_state_sim_8{lay}
+Xtri_stat@0 vdd gnd gnd in out vdd SCL-_4___tri_state_8
+
+* Spice Code nodes in cell cell 'tri_state_sim_8{lay}'
+vdd vdd 0 DC 3.3,
+vin in 0 DC pulse 0 3.3 10n 1333.33ps 1333.33ps 10n,
+cload out 0 96fF,
+.tran 0 40n,
+.measure tpdr
++ TRIG v(in) VAL=1.65 FALL=1
++ TARG v(out) VAL=1.65 RISE=1
+.measure tpdf
++ TRIG v(in) VAL=1.65 RISE=1
++ TARG v(out) VAL=1.65 FALL=1
+.include scmos18.txt
+.END

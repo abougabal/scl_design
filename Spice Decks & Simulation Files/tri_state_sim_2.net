@@ -1,0 +1,31 @@
+*** SPICE deck for cell tri_state_sim_2{lay} from library SCL-(4)
+*** Created on Wed Oct 23, 2019 16:54:53
+*** Last revised on Sat Oct 26, 2019 18:15:18
+*** Written on Sat Oct 26, 2019 18:15:22 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SCL-_4___tri_state_2 FROM CELL tri_state_2{lay}
+.SUBCKT SCL-_4___tri_state_2 en en_ gnd in out vdd
+Mnmos@9 net@219 in gnd gnd NMOS L=0.2U W=1.2U AS=2.47P AD=0.413P PS=11.6U PD=3.05U
+Mnmos@10 out en net@219 gnd NMOS L=0.2U W=1.2U AS=0.413P AD=1.24P PS=3.05U PD=5.2U
+Mpmos@6 net@240 in vdd vdd PMOS L=0.2U W=2.8U AS=3.14P AD=0.938P PS=14.1U PD=6.55U
+Mpmos@7 out en_ net@240 vdd PMOS L=0.2U W=2.8U AS=0.938P AD=1.24P PS=6.55U PD=5.2U
+.ENDS SCL-_4___tri_state_2
+
+*** TOP LEVEL CELL: tri_state_sim_2{lay}
+Xtri_stat@3 vdd gnd gnd in out vdd SCL-_4___tri_state_2
+
+* Spice Code nodes in cell cell 'tri_state_sim_2{lay}'
+vdd vdd 0 DC 3.3,
+vin in 0 DC pulse 0 3.3 10n 1333.33ps 1333.33ps 10n,
+cload out 0 96fF,
+.tran 0 40n,
+.measure tpdr
++ TRIG v(in) VAL=1.65 FALL=1
++ TARG v(out) VAL=1.65 RISE=1
+.measure tpdf
++ TRIG v(in) VAL=1.65 RISE=1
++ TARG v(out) VAL=1.65 FALL=1
+.include scmos18.txt
+.END

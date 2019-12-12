@@ -1,0 +1,33 @@
+*** SPICE deck for cell NOR4_sim{lay} from library SCL-(4)
+*** Created on Wed Oct 23, 2019 19:25:19
+*** Last revised on Sat Oct 26, 2019 19:05:34
+*** Written on Sat Oct 26, 2019 19:05:39 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SCL-_4___NOR3_4 FROM CELL NOR3_4{lay}
+.SUBCKT SCL-_4___NOR3_4 A B C gnd NOR3 vdd
+Mnmos@0 NOR3 A gnd gnd NMOS L=0.2U W=1.2U AS=1.34P AD=1.605P PS=5.917U PD=6.025U
+Mnmos@1 gnd B NOR3 gnd NMOS L=0.2U W=1.2U AS=1.605P AD=1.34P PS=6.025U PD=5.917U
+Mnmos@2 NOR3 C gnd gnd NMOS L=0.2U W=1.2U AS=1.34P AD=1.605P PS=5.917U PD=6.025U
+Mpmos@0 vdd A net@43 vdd PMOS L=0.2U W=7.4U AS=1.85P AD=6.46P PS=7.9U PD=23.7U
+Mpmos@1 net@43 B net@44 vdd PMOS L=0.2U W=7.4U AS=1.85P AD=1.85P PS=7.9U PD=7.9U
+Mpmos@2 net@44 C NOR3 vdd PMOS L=0.2U W=7.4U AS=1.605P AD=1.85P PS=6.025U PD=7.9U
+.ENDS SCL-_4___NOR3_4
+
+*** TOP LEVEL CELL: NOR4_sim{lay}
+XNOR3_4@0 A gnd gnd gnd NOR3 vdd SCL-_4___NOR3_4
+
+* Spice Code nodes in cell cell 'NOR4_sim{lay}'
+vdd vdd 0 DC 3.3,
+vin A 0 DC pulse 0 3.3 10n 0ps 0ps 10n,
+cload out 0 24fF,
+.tran 0 40n,
+.measure tpdr
++ TRIG v(A) VAL=1.65 FALL=1
++ TARG v(NOR3) VAL=1.65 RISE=1
+.measure tpdf
++ TRIG v(A) VAL=1.65 RISE=1
++ TARG v(NOR3) VAL=1.65 FALL=1
+.include scmos18.txt
+.END

@@ -1,0 +1,35 @@
+*** SPICE deck for cell ComplexFunction_4_lay_sim{lay} from library SCL
+*** Created on Wed Oct 23, 2019 11:03:31
+*** Last revised on Sat Oct 26, 2019 17:48:31
+*** Written on Sat Oct 26, 2019 17:48:35 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SCL__ComplexFunction_4 FROM CELL ComplexFunction_4{lay}
+.SUBCKT SCL__ComplexFunction_4 a b c d gnd out vdd
+Mnmos@0 net@23 a gnd gnd NMOS L=0.2U W=2.4U AS=3.3P AD=1.17P PS=12.8U PD=3.375U
+Mnmos@1 out b net@23 gnd NMOS L=0.2U W=2.4U AS=1.17P AD=1.978P PS=3.375U PD=5.075U
+Mnmos@2 net@0 c out gnd NMOS L=0.2U W=2.4U AS=1.978P AD=1.203P PS=5.075U PD=3.5U
+Mnmos@3 gnd d net@0 gnd NMOS L=0.2U W=2.4U AS=1.203P AD=3.3P PS=3.5U PD=12.8U
+Mpmos@0 net@2 a out vdd PMOS L=0.2U W=5.8U AS=1.978P AD=3.518P PS=5.075U PD=9.938U
+Mpmos@1 out b net@2 vdd PMOS L=0.2U W=5.8U AS=3.518P AD=1.978P PS=9.938U PD=5.075U
+Mpmos@2 net@2 c vdd vdd PMOS L=0.2U W=5.8U AS=4.496P AD=3.518P PS=13.2U PD=9.938U
+Mpmos@3 vdd d net@2 vdd PMOS L=0.2U W=5.8U AS=3.518P AD=4.496P PS=9.938U PD=13.2U
+.ENDS SCL__ComplexFunction_4
+
+*** TOP LEVEL CELL: ComplexFunction_4_lay_sim{lay}
+XComplexF@0 a vdd net@6 net@6 gnd out vdd SCL__ComplexFunction_4
+
+* Spice Code nodes in cell cell 'ComplexFunction_4_lay_sim{lay}'
+vdd vdd 0 DC 3.3,
+vin a 0 DC pulse 0 3.3 10n 1333.33ps 1333.33ps 10n,
+cload out 0 96fF,
+.tran 0 40n,
+.measure tpdr 
++ TRIG v(a) VAL=1.65 FALL=1
++ TARG v(out) VAL=1.65 RISE=1
+.measure tpdf 
++ TRIG v(a) VAL=1.65 RISE=1
++ TARG v(out) VAL=1.65 FALL=1
+.include scmos18.txt
+.END

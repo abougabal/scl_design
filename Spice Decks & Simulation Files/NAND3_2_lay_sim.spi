@@ -1,0 +1,33 @@
+*** SPICE deck for cell NAND3_2_lay_sim{lay} from library SCL
+*** Created on Wed Oct 23, 2019 10:05:32
+*** Last revised on Sat Oct 26, 2019 18:16:55
+*** Written on Sat Oct 26, 2019 18:16:59 by Electric VLSI Design System, version 9.07
+*** Layout tech: mocmos, foundry MOSIS
+*** UC SPICE *** , MIN_RESIST 4.0, MIN_CAPAC 0.1FF
+
+*** SUBCIRCUIT SCL__NAND3_2 FROM CELL NAND3_2{lay}
+.SUBCKT SCL__NAND3_2 a b c gnd out vdd
+Mnmos@0 net@23 a gnd gnd NMOS L=0.2U W=1.8U AS=3.46P AD=0.878P PS=14.8U PD=2.775U
+Mnmos@1 net@1 b net@23 gnd NMOS L=0.2U W=1.8U AS=0.878P AD=0.9P PS=2.775U PD=2.8U
+Mnmos@2 out c net@1 gnd NMOS L=0.2U W=1.8U AS=0.9P AD=0.941P PS=2.8U PD=3.538U
+Mpmos@0 vdd a out vdd PMOS L=0.2U W=1.4U AS=0.941P AD=1.453P PS=3.538U PD=6.033U
+Mpmos@1 out b vdd vdd PMOS L=0.2U W=1.4U AS=1.453P AD=0.941P PS=6.033U PD=3.538U
+Mpmos@2 vdd c out vdd PMOS L=0.2U W=1.4U AS=0.941P AD=1.453P PS=3.538U PD=6.033U
+.ENDS SCL__NAND3_2
+
+*** TOP LEVEL CELL: NAND3_2_lay_sim{lay}
+XNAND3_2@1 a vdd vdd gnd out vdd SCL__NAND3_2
+
+* Spice Code nodes in cell cell 'NAND3_2_lay_sim{lay}'
+vdd vdd 0 DC 3.3,
+vin a 0 DC pulse 0 3.3 10n 1333.33ps 1333.33ps 10n,
+cload out 0 96fF,
+.tran 0 40n,
+.measure tpdr 
++ TRIG v(a) VAL=1.65 FALL=1
++ TARG v(out) VAL=1.65 RISE=1
+.measure tpdf 
++ TRIG v(a) VAL=1.65 RISE=1
++ TARG v(out) VAL=1.65 FALL=1
+.include scmos18.txt
+.END
